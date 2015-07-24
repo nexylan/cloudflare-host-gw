@@ -1,0 +1,25 @@
+{
+    "name": "nexylan/cloudflare-host-gw",
+    "description": "A PHP sdk to communicate with CloudFlare Hosting Provider API",
+    "keywords": ["CloudFlare", "API", "SDK", "Hosting Provider"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sullivan SENECHAL",
+            "email": "sullivan@nexylan.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "kriswallsmith/buzz": "~0.1"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": { "Nexy\\CloudFlareHostGW\\": "src" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Nexy\\CloudFlareHostGW\\Tests\\": "tests" }
+    }
+}
