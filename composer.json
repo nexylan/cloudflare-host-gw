@@ -14,6 +14,18 @@
         "php": ">=5.4.0",
         "kriswallsmith/buzz": "~0.1"
     },
+    "require-dev": {
+        "symfony/http-kernel": "~2.7",
+        "symfony/dependency-injection": "~2.7",
+        "symfony/config": "~2.7",
+        "sensio/buzz-bundle": "~1.0"
+    },
+    "suggest": {
+        "symfony/http-kernel": "For Symfony integration as bundle",
+        "symfony/dependency-injection": "For Symfony integration as bundle",
+        "symfony/config": "For Symfony integration as bundle",
+        "sensio/buzz-bundle": "For Symfony integration as bundle"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
