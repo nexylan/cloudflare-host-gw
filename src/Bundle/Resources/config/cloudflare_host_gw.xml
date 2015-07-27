@@ -8,6 +8,7 @@
 
         <service id="nexy_cloudflare_host_gw.cloudflare_host_gw" class="Nexy\CloudFlareHostGW\CloudFlareHostGW">
             <argument>%nexy_cloudflare_host_gw.host_key%</argument>
+            <argument>%nexy_cloudflare_host_gw.user_key%</argument>
             <argument type="service" id="buzz" />
         </service>
 

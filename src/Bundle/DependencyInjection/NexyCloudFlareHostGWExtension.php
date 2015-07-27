@@ -32,6 +32,7 @@ class NexyCloudFlareHostGWExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter($this->getAlias().'.host_key', $config['host_key']);
+        $container->setParameter($this->getAlias().'.user_key', $config['user_key']);
 
         $loader->load('cloudflare_host_gw.xml');
     }

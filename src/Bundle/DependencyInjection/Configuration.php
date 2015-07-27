@@ -29,7 +29,13 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('host_key')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('host_key')
+                    ->isRequired()->cannotBeEmpty()
+                ->end()
+                ->scalarNode('user_key')
+                    ->defaultNull()
+                    ->info('You can set user key if you use only one.')
+                ->end()
             ->end()
         ;
 

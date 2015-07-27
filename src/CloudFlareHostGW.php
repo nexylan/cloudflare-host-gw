@@ -26,32 +26,39 @@ final class CloudFlareHostGW
     private $hostKey;
 
     /**
+     * @var string
+     */
+    private $userKey = null;
+
+    /**
      * @var Browser
      */
     private $browser;
 
     /**
      * @param string  $hostKey
+     * @param string  $userKey
      * @param Browser $browser
      */
-    public function __construct($hostKey, Browser $browser = null)
+    public function __construct($hostKey, $userKey = null, Browser $browser = null)
     {
         $this->hostKey = $hostKey;
+        $this->userKey = $userKey;
         $this->browser = $browser ? $browser : new Browser();
     }
 
     /**
-     * @param string   $userKey
      * @param string   $zoneName
      * @param string   $resolveTo
      * @param string[] $subdomains
+     * @param string   $userKey
      *
      * @return mixed
      */
-    public function zoneSet($userKey, $zoneName, $resolveTo, array $subdomains)
+    public function zoneSet($zoneName, $resolveTo, array $subdomains, $userKey = null)
     {
         return $this->request('zone_set', [
-            'user_key'   => $userKey,
+            'user_key'   => null !== $userKey ? $userKey : $this->userKey,
             'zone_name'  => $zoneName,
             'resolve_to' => $resolveTo,
             'subdomains' => implode(',', $subdomains),
