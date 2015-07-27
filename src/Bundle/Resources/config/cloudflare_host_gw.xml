@@ -10,6 +10,9 @@
             <argument>%nexy_cloudflare_host_gw.host_key%</argument>
             <argument>%nexy_cloudflare_host_gw.user_key%</argument>
             <argument type="service" id="buzz" />
+            <call method="setTimeout">
+                <argument>%nexy_cloudflare_host_gw.timeout%</argument>
+            </call>
         </service>
 
     </services>

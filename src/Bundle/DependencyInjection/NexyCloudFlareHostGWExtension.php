@@ -33,6 +33,7 @@ class NexyCloudFlareHostGWExtension extends Extension
 
         $container->setParameter($this->getAlias().'.host_key', $config['host_key']);
         $container->setParameter($this->getAlias().'.user_key', $config['user_key']);
+        $container->setParameter($this->getAlias().'.timeout', $config['timeout']);
 
         $loader->load('cloudflare_host_gw.xml');
     }

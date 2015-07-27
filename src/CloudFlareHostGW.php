@@ -48,6 +48,16 @@ final class CloudFlareHostGW
     }
 
     /**
+     * Set Buzz client timeout
+     *
+     * @param int $timeout
+     */
+    public function setTimeout($timeout)
+    {
+        $this->browser->getClient()->setTimeout($timeout);
+    }
+
+    /**
      * @param string   $zoneName
      * @param string   $resolveTo
      * @param string[] $subdomains

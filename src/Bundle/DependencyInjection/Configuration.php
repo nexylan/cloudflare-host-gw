@@ -36,6 +36,10 @@ class Configuration implements ConfigurationInterface
                     ->defaultNull()
                     ->info('You can set user key if you use only one.')
                 ->end()
+                ->scalarNode('timeout')
+                    ->defaultValue(5)
+                    ->info('The default http client timeout.')
+                ->end()
             ->end()
         ;
 
