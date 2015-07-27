@@ -25,11 +25,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('nexy_cloudflare');
+        $rootNode = $treeBuilder->root('nexy_cloudflare_host_gw');
 
         $rootNode
             ->children()
-                ->scalarNode('host_key')->cannotBeEmpty()->end()
+                ->scalarNode('host_key')->isRequired()->cannotBeEmpty()->end()
             ->end()
         ;
 
