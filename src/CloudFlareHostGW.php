@@ -68,11 +68,10 @@ final class CloudFlareHostGW
     public function zoneSet($zoneName, $resolveTo, array $subdomains, $userKey = null)
     {
         return $this->request('zone_set', [
-            'user_key'   => null !== $userKey ? $userKey : $this->userKey,
             'zone_name'  => $zoneName,
             'resolve_to' => $resolveTo,
             'subdomains' => implode(',', $subdomains),
-        ]);
+        ], $userKey);
     }
 
     /**
@@ -84,22 +83,23 @@ final class CloudFlareHostGW
     public function zoneLookup($zoneName, $userKey = null)
     {
         return $this->request('zone_lookup', [
-            'user_key'   => null !== $userKey ? $userKey : $this->userKey,
             'zone_name'  => $zoneName,
-        ]);
+        ], $userKey);
     }
 
     /**
      * @param string $act
      * @param array  $parameters
+     * @param string $userKey
      *
      * @return mixed
      */
-    private function request($act, array $parameters)
+    private function request($act, array $parameters, $userKey = null)
     {
         $response = $this->browser->post(self::API_URL, [], array_merge([
             'host_key' => $this->hostKey,
             'act'      => $act,
+            'user_key' => null !== $userKey ? $userKey : $this->userKey,
         ], $parameters));
 
         return json_decode($response->getContent());
