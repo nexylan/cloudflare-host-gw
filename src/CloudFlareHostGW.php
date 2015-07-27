@@ -48,7 +48,7 @@ final class CloudFlareHostGW
     }
 
     /**
-     * Set Buzz client timeout
+     * Set Buzz client timeout.
      *
      * @param int $timeout
      */
