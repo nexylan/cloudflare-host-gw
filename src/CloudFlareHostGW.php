@@ -76,6 +76,20 @@ final class CloudFlareHostGW
     }
 
     /**
+     * @param string $zoneName
+     * @param string $userKey
+     *
+     * @return mixed
+     */
+    public function zoneLookup($zoneName, $userKey = null)
+    {
+        return $this->request('zone_lookup', [
+            'user_key'   => null !== $userKey ? $userKey : $this->userKey,
+            'zone_name'  => $zoneName,
+        ]);
+    }
+
+    /**
      * @param string $act
      * @param array  $parameters
      *
