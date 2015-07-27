@@ -102,6 +102,6 @@ final class CloudFlareHostGW
             'user_key' => null !== $userKey ? $userKey : $this->userKey,
         ], $parameters));
 
-        return json_decode($response->getContent());
+        return json_decode($response->getContent(), true);
     }
 }
