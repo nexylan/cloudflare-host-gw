@@ -73,7 +73,7 @@ final class CloudFlareHostGW
      */
     private function request($act, array $parameters)
     {
-        $response = $this->browser->post(self::API_URL, array_merge([
+        $response = $this->browser->post(self::API_URL, [], array_merge([
             'host_key' => $this->hostKey,
             'act'      => $act,
         ], $parameters));
