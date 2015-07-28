@@ -88,6 +88,19 @@ final class CloudFlareHostGW
     }
 
     /**
+     * @param string $zoneName
+     * @param string $userKey
+     *
+     * @return mixed
+     */
+    public function zoneDelete($zoneName, $userKey = null)
+    {
+        return $this->request('zone_delete', [
+            'zone_name' => $zoneName,
+        ], $userKey);
+    }
+
+    /**
      * @param string $act
      * @param array  $parameters
      * @param string $userKey
