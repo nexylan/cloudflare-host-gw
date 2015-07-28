@@ -83,7 +83,7 @@ final class CloudFlareHostGW
     public function zoneLookup($zoneName, $userKey = null)
     {
         return $this->request('zone_lookup', [
-            'zone_name'  => $zoneName,
+            'zone_name' => $zoneName,
         ], $userKey);
     }
 
