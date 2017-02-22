@@ -12,6 +12,7 @@
 namespace Nexy\CloudFlareHostGW;
 
 use Buzz\Browser;
+use Nexy\CloudFlareHostGW\Exception\ApiErrorException;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
@@ -117,9 +118,8 @@ final class CloudFlareHostGW
 
         $data = json_decode($response->getContent(), true);
 
-        // TODO: Exception management
         if ('error' === $data['result']) {
-            return false;
+            throw new ApiErrorException($data['msg'], $data['err_code']);
         }
 
         return $data['response'];
