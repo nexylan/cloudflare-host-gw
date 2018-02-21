@@ -11,7 +11,11 @@
 
 namespace Nexy\CloudFlareHostGW;
 
-use Buzz\Browser;
+use Http\Client\Common\HttpMethodsClient;
+use Http\Client\Exception\TransferException;
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
 use Nexy\CloudFlareHostGW\Exception\ApiErrorException;
 
 /**
@@ -32,30 +36,23 @@ final class CloudFlareHostGW
     private $userKey = null;
 
     /**
-     * @var Browser
+     * @var HttpMethodsClient
      */
-    private $browser;
+    private $httpClient;
 
     /**
      * @param string  $hostKey
      * @param string  $userKey
-     * @param Browser $browser
+     * @param HttpClient $httpClient
      */
-    public function __construct($hostKey, $userKey = null, Browser $browser = null)
+    public function __construct($hostKey, $userKey = null, HttpClient $httpClient = null)
     {
         $this->hostKey = $hostKey;
         $this->userKey = $userKey;
-        $this->browser = $browser ? $browser : new Browser();
-    }
-
-    /**
-     * Set Buzz client timeout.
-     *
-     * @param int $timeout
-     */
-    public function setTimeout($timeout)
-    {
-        $this->browser->getClient()->setTimeout($timeout);
+        $this->httpClient = new HttpMethodsClient(
+            $httpClient ?: HttpClientDiscovery::find(),
+            MessageFactoryDiscovery::find()
+        );
     }
 
     /**
@@ -110,13 +107,23 @@ final class CloudFlareHostGW
      */
     private function request($act, array $parameters, $userKey = null)
     {
-        $response = $this->browser->post(self::API_URL, [], array_merge([
-            'host_key' => $this->hostKey,
-            'act'      => $act,
-            'user_key' => null !== $userKey ? $userKey : $this->userKey,
-        ], $parameters));
+        try {
+            $response = $this->httpClient->post(self::API_URL, [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ], http_build_query(array_merge([
+                'host_key' => $this->hostKey,
+                'act'      => $act,
+                'user_key' => null !== $userKey ? $userKey : $this->userKey,
+            ], $parameters)));
+        } catch (TransferException $exception) {
+            throw new ApiErrorException($exception->getMessage(), $exception->getCode(), $exception);
+        }
 
-        $data = json_decode($response->getContent(), true);
+        if ($response->getStatusCode() >= 400) {
+            throw new ApiErrorException($response->getReasonPhrase(), $response->getStatusCode());
+        }
+
+        $data = json_decode($response->getBody()->getContents(), true);
 
         if ('error' === $data['result']) {
             throw new ApiErrorException($data['msg'], $data['err_code']);
