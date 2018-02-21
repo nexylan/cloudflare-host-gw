@@ -29,16 +29,18 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('http')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('client')->defaultValue('httplug.client')->end()
+                    ->end()
+                ->end()
                 ->scalarNode('host_key')
                     ->isRequired()->cannotBeEmpty()
                 ->end()
                 ->scalarNode('user_key')
                     ->defaultNull()
                     ->info('You can set user key if you use only one.')
-                ->end()
-                ->scalarNode('timeout')
-                    ->defaultValue(5)
-                    ->info('The default http client timeout.')
                 ->end()
             ->end()
         ;

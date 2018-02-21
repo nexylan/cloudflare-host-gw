@@ -12,6 +12,7 @@
 namespace Nexy\CloudFlareHostGW\Bundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -31,9 +32,9 @@ class NexyCloudFlareHostGWExtension extends Extension
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
+        $container->setAlias('nexy_cloudflare_host_gw.http.client', new Alias($config['http']['client'], false));
         $container->setParameter($this->getAlias().'.host_key', $config['host_key']);
         $container->setParameter($this->getAlias().'.user_key', $config['user_key']);
-        $container->setParameter($this->getAlias().'.timeout', $config['timeout']);
 
         $loader->load('cloudflare_host_gw.xml');
     }
