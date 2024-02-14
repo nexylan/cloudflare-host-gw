@@ -13,11 +13,17 @@ jobs:
     strategy:
       matrix:
         include:
-          - php: '5.4'
-            phpunit: '6'
           - php: '5.6'
             phpunit: '6'
           - php: '7.0'
+            phpunit: '6'
+          - php: '7.1'
+            phpunit: '6'
+          - php: '7.2'
+            phpunit: '6'
+          - php: '7.3'
+            phpunit: '6'
+          - php: '7.4'
             phpunit: '6'
       fail-fast: false
     runs-on: ubuntu-22.04
